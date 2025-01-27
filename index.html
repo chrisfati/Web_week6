@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Interactive Webpage</title>
+  <link href = "style.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Enhanced Form</h2>
+    <form id="enhancedForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name">
+      <div class="error" id="nameError"></div>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+      <div class="error" id="emailError"></div>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password">
+      <div class="error" id="passwordError"></div>
+
+      <label for="dropdown">Select an option:</label>
+      <select id="dropdown">
+        <option value="">-- Select an option --</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+      <div class="message" id="dropdownMessage"></div>
+
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('enhancedForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const dropdown = document.getElementById('dropdown');
+    const dropdownMessage = document.getElementById('dropdownMessage');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    // Validate form on submit
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let isValid = true;
+
+      // Validate name
+      const name = nameInput.value.trim();
+      if (name.length < 3) {
+        nameError.textContent = 'Name must be at least 3 characters.';
+        isValid = false;
+      } else {
+        nameError.textContent = '';
+      }
+
+      // Validate email
+      const email = emailInput.value.trim();
+      if (!validateEmail(email)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        isValid = false;
+      } else {
+        emailError.textContent = '';
+      }
+
+      // Validate password
+      const password = passwordInput.value.trim();
+      if (!validatePassword(password)) {
+        passwordError.textContent = 'Password must be at least 8 characters, include one uppercase letter, and one number.';
+        isValid = false;
+      } else {
+        passwordError.textContent = '';
+      }
+
+      // If all fields are valid
+      if (isValid) {
+        alert('Form submitted successfully!');
+        form.reset();
+        dropdownMessage.textContent = '';
+      }
+    });
+
+    // Validate email format
+    function validateEmail(email) {
+      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return re.test(email);
+    }
+
+    // Validate password format
+    function validatePassword(password) {
+      const re = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      return re.test(password);
+    }
+
+    // Dropdown onchange event
+    dropdown.addEventListener('change', () => {
+      const selectedValue = dropdown.value;
+      if (selectedValue) {
+        dropdownMessage.textContent = `You selected: ${selectedValue}`;
+      } else {
+        dropdownMessage.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
